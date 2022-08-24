@@ -1,13 +1,12 @@
 package br.com.alura.leilao;
 
-import org.junit.After;
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static br.com.alura.leilao.LoginPage.URL_LOGIN;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginTest {
 
@@ -27,8 +26,8 @@ public class LoginTest {
         loginPage.fillTheLoginPage("fulano","pass");
         loginPage.logIn();
 
-        Assertions.assertFalse(this.loginPage.isLoginPage());
-        Assertions.assertEquals("fulano",this.loginPage.getLoggedUser());
+        assertFalse(this.loginPage.isLoginPage());
+        assertEquals("fulano",this.loginPage.getLoggedUser());
     }
     @Test
     void should_Not_Be_Sign_In_When_The_Data_Is_Invalid() {
@@ -36,15 +35,15 @@ public class LoginTest {
         loginPage.logIn();
 
         Assertions.assertNull(this.loginPage.getLoggedUser());
-        Assertions.assertTrue(this.loginPage.isLoginPageError());
-        Assertions.assertTrue(this.loginPage.getContainsText("Usuário e senha inválidos."));
+        assertTrue(this.loginPage.isLoginPageError());
+        assertTrue(this.loginPage.getContainsText("Usuário e senha inválidos."));
     }
 
     @Test
     void should_Not_Access_The_Restricted_Page_Without_Being_Logged_In() {
         this.loginPage.goToLeiloesPage();
 
-        Assertions.assertTrue(this.loginPage.isLoginPage());
-        Assertions.assertFalse(this.loginPage.getContainsText("Dados do Leilão"));
+        assertTrue(this.loginPage.isLoginPage());
+        assertFalse(this.loginPage.getContainsText("Dados do Leilão"));
     }
 }
